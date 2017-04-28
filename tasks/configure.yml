@@ -1,0 +1,16 @@
+---
+- name: Create Vault configuration
+  template:
+    src: zfssnapmanager.cfg.j2
+    dest: /etc/zfssnapmanager.cfg
+    owner: root
+    group: root
+    mode: 0640
+  register: conf
+
+- name: Enable and restart zfs-snap-manager
+  service:
+    name: zfs-snap-manager.service
+    state: restarted
+    enabled: true
+  when: conf.changed

@@ -1,29 +1,32 @@
 #{{ ansible_managed }}
 
-{% for fs in filesystems %}
-	[{{- parent_fs | mandatory -}}/{{- fs.name | mandatory -}}]
-	time = {{ fs.snapshots.time | default(snapshot_defaults.time) | default(snapshot_base_defaults.time) }}
-	snapshot = {{ fs.snapshots.snapshot | default(snapshot_defaults.snapshot) | default(snapshot_base_defaults.snapshot) }}
-	schema = {{ fs.snapshots.schema | default(snapshot_defaults.schema) | default(snapshot_base_defaults.schema) }}
-	{% if (fs.snapshots is defined and fs.snapshots.mountpoint is defined) or (snapshot_defaults is defined and snapshot_defaults.mountpoint is defined) %}
-		mountpoint = {{- fs.snapshots.mountpoint | default(snapshot_defaults.mountpoint) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.replicate_endpoint is defined) or (snapshot_defaults is defined and snapshot_defaults.replicate_endpoint is defined) %}
-		replicate_endpoint = {{- fs.snapshots.replicate_endpoint | default(snapshot_defaults.replicate_endpoint) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.replicate_target is defined) or (snapshot_defaults is defined and snapshot_defaults.replicate_target is defined) %}
-		replicate_target = {{- fs.snapshots.replicate_target | default(snapshot_defaults.replicate_target) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.replicate_source is defined) or (snapshot_defaults is defined and snapshot_defaults.replicate_source is defined) %}
-		replicate_source = {{- fs.snapshots.replicate_source | default(snapshot_defaults.replicate_source) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.compression is defined) or (snapshot_defaults is defined and snapshot_defaults.compression is defined) %}
-		compression = {{- fs.snapshots.compression | default(snapshot_defaults.compression) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.preexec is defined) or (snapshot_defaults is defined and snapshot_defaults.preexec is defined) %}
-		preexec = {{- fs.snapshots.preexec | default(snapshot_defaults.preexec) -}}
-	{% endif %}
-	{% if (fs.snapshots is defined and fs.snapshots.postexec is defined) or (snapshot_defaults is defined and snapshot_defaults.postexec is defined) %}
-		postexec = {{- fs.snapshots.postexec | default(snapshot_defaults.postexec) -}}
-	{% endif %}
-{% endfor %}
+{% if filesystems is defined %}
+	{% for fs in filesystems %}
+		[{{- zfs_parent_fs | mandatory -}}/{{- fs.name | mandatory -}}]
+		time = {{ fs.snapshots.time | default(zfs_snapshot_defaults.time) | default(zfs_snapshot_base_defaults.time) }}
+		snapshot = {{ fs.snapshots.snapshot | default(zfs_snapshot_defaults.snapshot) | default(zfs_snapshot_base_defaults.snapshot) }}
+		schema = {{ fs.snapshots.schema | default(zfs_snapshot_defaults.schema) | default(zfs_snapshot_base_defaults.schema) }}
+		{% if (fs.snapshots is defined and fs.snapshots.mountpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.mountpoint is defined) %}
+			mountpoint = {{- fs.snapshots.mountpoint | default(zfs_snapshot_defaults.mountpoint) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.replicate_endpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.replicate_endpoint is defined) %}
+			replicate_endpoint = {{- fs.snapshots.replicate_endpoint | default(zfs_snapshot_defaults.replicate_endpoint) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.replicate_target is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.replicate_target is defined) %}
+			replicate_target = {{- fs.snapshots.replicate_target | default(zfs_snapshot_defaults.replicate_target) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.replicate_source is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.replicate_source is defined) %}
+			replicate_source = {{- fs.snapshots.replicate_source | default(zfs_snapshot_defaults.replicate_source) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.compression is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.compression is defined) %}
+			compression = {{- fs.snapshots.compression | default(zfs_snapshot_defaults.compression) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.preexec is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.preexec is defined) %}
+			preexec = {{- fs.snapshots.preexec | default(zfs_snapshot_defaults.preexec) -}}
+		{% endif %}
+		{% if (fs.snapshots is defined and fs.snapshots.postexec is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.postexec is defined) %}
+			postexec = {{- fs.snapshots.postexec | default(zfs_snapshot_defaults.postexec) -}}
+		{% endif %}
+		
+	{% endfor %}
+{% endif %}

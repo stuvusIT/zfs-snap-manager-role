@@ -1,0 +1,102 @@
+---
+- name: Update repositories cache (apt)
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "apt"
+
+- name: Update repositories cache (pacman)
+  pacman:
+    update_cache: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Install dependencies (apt)
+  apt:
+    name: git
+  when: ansible_pkg_mgr == "apt"
+
+- name: Install dependencies (pacman)
+  pacman:
+    name: git
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Create clone directory
+  file:
+    path: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
+    state: directory
+    mode: 0770
+
+- name: Clone zfs-snap-manager
+  git:
+    repo: "https://github.com/khenderick/zfs-snap-manager"
+    dest: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
+    version: "v{{ zfs_snap_manager_version }}"
+    force: true
+  register: git
+
+- name: create library directory
+  file:
+    path: /usr/lib/zfs-snap-manager
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: git.changed
+
+- name: create licence directory
+  file:
+    path: /usr/share/licenses/zfs-snap-manager
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: git.changed
+
+- name: Copy licence file
+  copy:
+    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/LICENSE"
+    dest: /usr/share/licenses/zfs-snap-manager/LICENSE
+    force: true
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: true
+  when: git.changed
+
+- name: Copy systemd service
+  copy:
+    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/system/zfs-snap-manager.service"
+    dest: /usr/lib/systemd/system/zfs-snap-manager.service
+    force: true
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: true
+  when: git.changed
+
+- name: Copy manager script
+  copy:
+    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/scripts/manager.py"
+    dest: /usr/lib/zfs-snap-manager/manager.py
+    force: true
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: true
+  when: git.changed
+
+- name: Copy helper scripts
+  copy:
+    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/scripts/{{ item }}"
+    dest: "/usr/lib/zfs-snap-manager/{{ item }}"
+    force: true
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: true
+  with_items:
+    - clean.py
+    - helper.py
+    - zfs.py
+  when: git.changed
