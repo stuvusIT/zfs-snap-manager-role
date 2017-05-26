@@ -1,11 +1,12 @@
 ---
-- name: Create Vault configuration
+- name: Create zfs-snap-manager configuration
   template:
     src: zfssnapmanager.cfg.j2
     dest: /etc/zfssnapmanager.cfg
     owner: root
     group: root
     mode: 0640
+    backup: yes
   register: conf
 
 - name: Enable and restart zfs-snap-manager

@@ -44,30 +44,10 @@
     mode: 0755
   when: git.changed
 
-- name: create licence directory
-  file:
-    path: /usr/share/licenses/zfs-snap-manager
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  when: git.changed
-
-- name: Copy licence file
-  copy:
-    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/LICENSE"
-    dest: /usr/share/licenses/zfs-snap-manager/LICENSE
-    force: true
-    mode: 0644
-    owner: root
-    group: root
-    remote_src: true
-  when: git.changed
-
 - name: Copy systemd service
   copy:
     src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/system/zfs-snap-manager.service"
-    dest: /usr/lib/systemd/system/zfs-snap-manager.service
+    dest: /etc/systemd/system/zfs-snap-manager.service
     force: true
     mode: 0644
     owner: root

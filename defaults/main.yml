@@ -4,3 +4,5 @@ zfs_snapshot_base_defaults:
   time: 04:00
   snapshot: True
   schema: 7d3w11m4y
+zfs_snapshot_defaults: {}
+zfs_parent_fs: tank
