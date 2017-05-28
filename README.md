@@ -15,8 +15,8 @@ Obviously, any ZFS filesystems that should be snapshotted must exist.
 | `zfs_snap_manager_clone_dir` | no        | $ansible_env.HOME/.cache |                                                                                                                                                                           | cache directory to clone git repo to |
 | `zfs_parent_fs`              | no        | `tank`                   | Parent pool or filesystem (prepended to all datasets)                                                                                                                     |                                      
 | `zfs_snapshot_defaults`      | no        | `{}`                     | Default snapshot configuration used when there is no explicit configuration for a filesystem, see [snapshot configuration](#snapshot configuration) for content.          |                                      
-| `zfs_filesystems`            | yes       |                          | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |                                      
-| `zfs_filesystems`           | yes | | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |
+| `zfs_filesystems`            | no       |     `{}`                     | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |
+| `zvols`           | no | `{}` | List of zvols to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |
 
 ### Snapshot configuration
 

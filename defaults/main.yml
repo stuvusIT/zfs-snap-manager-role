@@ -6,3 +6,5 @@ zfs_snapshot_base_defaults:
   schema: 7d3w11m4y
 zfs_snapshot_defaults: {}
 zfs_parent_fs: tank
+zfs_filesystems: {}
+zvols: {}
