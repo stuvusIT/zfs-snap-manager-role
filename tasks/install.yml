@@ -35,7 +35,7 @@
     force: true
   register: git
 
-- name: create library directory
+- name: Create library directory
   file:
     path: /usr/lib/zfs-snap-manager
     state: directory
