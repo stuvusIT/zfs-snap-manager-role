@@ -7,11 +7,4 @@
     group: root
     mode: 0640
     backup: yes
-  register: conf
-
-- name: Enable and restart zfs-snap-manager
-  service:
-    name: zfs-snap-manager.service
-    state: restarted
-    enabled: true
-  when: conf.changed
+  notify: Enable and restart zfs-snap-manager

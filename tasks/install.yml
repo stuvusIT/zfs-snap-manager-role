@@ -32,6 +32,7 @@
     version: "v{{ zfs_snap_manager_version }}"
     force: true
   register: git
+  notify: Enable and restart zfs-snap-manager
 
 - name: Create library directory
   file:
