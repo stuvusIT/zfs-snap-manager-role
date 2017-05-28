@@ -1,5 +1,5 @@
 zfs_snap_manager_version: 0.1.13
-zfs_snap_manager_clone_dir: "{{ ansible_env.HOME }}/.cache"
+global_cache_dir: "{{ ansible_env.HOME }}/.cache"
 zfs_snapshot_base_defaults:
   time: 04:00
   snapshot: True

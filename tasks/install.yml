@@ -21,16 +21,20 @@
     name: git
   when: ansible_pkg_mgr == "pacman"
 
+- name: Set clone directory variable
+  set_fact:
+    zfs_snap_manager_clone_dir: "{{ global_cache_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
+
 - name: Create clone directory
   file:
-    path: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
+    path: "{{ zfs_snap_manager_clone_dir }}"
     state: directory
     mode: 0770
 
 - name: Clone zfs-snap-manager
   git:
     repo: "https://github.com/khenderick/zfs-snap-manager"
-    dest: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
+    dest: "{{ zfs_snap_manager_clone_dir }}"
     version: "v{{ zfs_snap_manager_version }}"
     force: true
   register: git
@@ -46,7 +50,7 @@
 
 - name: Copy systemd service
   copy:
-    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/system/zfs-snap-manager.service"
+    src: "{{ zfs_snap_manager_clone_dir }}/system/zfs-snap-manager.service"
     dest: /etc/systemd/system/zfs-snap-manager.service
     force: true
     mode: 0644
@@ -57,7 +61,7 @@
 
 - name: Copy manager script
   copy:
-    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/scripts/manager.py"
+    src: "{{ zfs_snap_manager_clone_dir }}/scripts/manager.py"
     dest: /usr/lib/zfs-snap-manager/manager.py
     force: true
     mode: 0755
@@ -68,10 +72,10 @@
 
 - name: Copy helper scripts
   copy:
-    src: "{{ zfs_snap_manager_clone_dir }}/python/src/github.com/khenderick/zfs-snap-manager/scripts/{{ item }}"
+    src: "{{ zfs_snap_manager_clone_dir }}/scripts/{{ item }}"
     dest: "/usr/lib/zfs-snap-manager/{{ item }}"
     force: true
-    mode: 0755
+    mode: 0644
     owner: root
     group: root
     remote_src: true
