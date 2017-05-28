@@ -25,12 +25,6 @@
   set_fact:
     zfs_snap_manager_clone_dir: "{{ global_cache_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
 
-- name: Create clone directory
-  file:
-    path: "{{ zfs_snap_manager_clone_dir }}"
-    state: directory
-    mode: 0770
-
 - name: Clone zfs-snap-manager
   git:
     repo: "https://github.com/khenderick/zfs-snap-manager"
