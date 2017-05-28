@@ -2,7 +2,6 @@
 
 This role installs and configures [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager)
 
-
 ## Requirements
 
 Obviously, any ZFS filesystems that should be snapshotted must exist.
@@ -33,9 +32,9 @@ Obviously, any ZFS filesystems that should be snapshotted must exist.
 | `preexec`              | (omitted)   | A command that will be executed, before snapshot/replication. Should be omitted if nothing should be executed                                                                                                                                                                                          |  
 | `postexec`             | (omitted)   | A command that will be executed, after snapshot/replication, but before the cleanup. Should be omitted if nothing should be executed                                                                                                                                                                   |  
 
+For more information on configuration and constraints thereof, consider reading the documentation at [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager).
 
 ## Example Playbook
-
 
 ```yml
 zfs_parent_fs: rpool
