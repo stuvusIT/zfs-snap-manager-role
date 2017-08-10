@@ -4,18 +4,18 @@ This role installs and configures [zfs-snap-manager](https://github.com/khenderi
 
 ## Requirements
 
-Obviously, any ZFS filesystems that should be snapshotted must exist.
+An apt- or pacman-based distribution is required. Obviously, any ZFS filesystems that should be snapshotted must exist.
 
 ## Role Variables
 
-| Name                         | mandatory | default                  | Description                                                                                                                                                               |                                      
-| -----------------------      | --------  | ----------               | -------------------------------------------------------------------------------                                                                                           |                                      
-| `zfs_snap_manager_version`   | no        | `0.1.13`                 | [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager) version to use                                                                                         |                                      
-| `zfs_snap_manager_clone_dir` | no        | $ansible_env.HOME/.cache |                                                                                                                                                                           | cache directory to clone git repo to |
-| `zfs_parent_fs`              | no        | `tank`                   | Parent pool or filesystem (prepended to all datasets)                                                                                                                     |                                      
-| `zfs_snapshot_defaults`      | no        | `{}`                     | Default snapshot configuration used when there is no explicit configuration for a filesystem, see [snapshot configuration](#snapshot configuration) for content.          |                                      
-| `zfs_filesystems`            | no       |     `{}`                     | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |
-| `zvols`           | no | `{}` | List of zvols to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |
+| Name                         | Mandatory / Default      | Description                                                                             |                                      
+| ---------------------------- | ------------------------ | ------------------------------------------------------------------------------- |                                      
+| `global_cache_dir`           | $ansible_env.HOME/.cache | cache directory to clone git repo to |
+| `zfs_snap_manager_version`   | `0.1.13`                 | [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager) version to use                                                                                         |                                      
+| `zfs_parent_fs`              | `tank`                   | Parent pool or filesystem (prepended to all datasets)                     |                                      
+| `zfs_snapshot_defaults`      | `{}`                     | Default snapshot configuration used when there is no explicit configuration for a filesystem, see [snapshot configuration](#snapshot configuration) for content.          |                                      
+| `zfs_filesystems`            | `{}`                     | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |
+| `zvols`                      | `{}`                     | List of zvols to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |
 
 ### Snapshot configuration
 
@@ -65,6 +65,8 @@ zfs_filesystems:
       replicate_endpoint: "ssh other.remote.server.org"
       replicate_source: zpool/data
 ```
+
+### Results 
 
 `rpool/test` will be snapshotted locally daily at `04:00` and snapshots will be cleaned up with the default schema `7d3w11m4y`.
 

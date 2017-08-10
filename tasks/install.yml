@@ -21,10 +21,6 @@
     name: git
   when: ansible_pkg_mgr == "pacman"
 
-- name: Set clone directory variable
-  set_fact:
-    zfs_snap_manager_clone_dir: "{{ global_cache_dir }}/python/src/github.com/khenderick/zfs-snap-manager"
-
 - name: Clone zfs-snap-manager
   git:
     repo: "https://github.com/khenderick/zfs-snap-manager"
@@ -40,7 +36,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750
   when: git.changed
 
 - name: Copy systemd service
