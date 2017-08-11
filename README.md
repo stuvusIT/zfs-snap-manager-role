@@ -13,7 +13,7 @@ The machine that executes the playbook needs to have internet access as well as 
 | ---------------------------- | ------------------------ | ------------------------------------------------------------------------------- |
 | `global_cache_dir`           | $ansible_env.HOME/.cache | cache directory to clone git repo to |
 | `zfs_snap_manager_version`   | `0.1.13`                 | [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager) version to use                                                                                         |
-| `zfs_parent_fs`              | `tank`                   | Parent pool or filesystem (prepended to all datasets)                     |
+| `zfs_parent_fs`              |                          | Parent pool or filesystem (optionally prepended to all datasets)                     |
 | `zfs_snapshot_defaults`      | `{}`                     | Default snapshot configuration used when there is no explicit configuration for a filesystem, see [snapshot configuration](#snapshot configuration) for content.          |
 | `zfs_filesystems`            | `[]`                     | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |
 | `zvols`                      | `[]`                     | List of zvols to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |

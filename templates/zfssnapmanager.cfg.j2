@@ -1,6 +1,6 @@
 #{{ ansible_managed }}
 {% for fs in zfs_filesystems | union(zvols) | default({}) %}
-	{{- '\n[' }}{{ zfs_parent_fs }}/{{ fs.name | default ('')}}{{ ']' }}
+	{{- '\n[' }}{%- if zfs_parent_fs is defined %}{{ zfs_parent_fs }}/{%- endif %}{{ fs.name | default ('')}}{{ ']' }}
 	
 	{%- if (fs.snapshots is defined and fs.snapshots.time is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.time is defined) %}
 		{{ '\ntime = ' }}{{ fs.snapshots.time | default(zfs_snapshot_defaults.time) | default(zfs_snapshot_base_defaults.time) }}
@@ -23,7 +23,7 @@
 	{%- if (fs.snapshots is defined and fs.snapshots.mountpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.mountpoint is defined) %}
 		{{ '\nmountpoint = ' }}{{ fs.snapshots.mountpoint | default(zfs_snapshot_defaults.mountpoint) }}
 	{%- else %}
-		{{ '\nmountpoint = /'}}{{ zfs_parent_fs }}/{{ fs.name | default('') }}
+		{{ '\nmountpoint = /'}}{%- if zfs_parent_fs is defined %}{{ zfs_parent_fs }}/{%- endif %}{{ fs.name | default('') }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.replicate_endpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.replicate_endpoint is defined) %}
