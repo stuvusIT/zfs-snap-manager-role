@@ -1,4 +1,3 @@
-
 #{{ ansible_managed }}
 {% for fs in zfs_filesystems | union(zvols) | default({}) %}
 	{{- '\n[' }}{{ zfs_parent_fs }}/{{ fs.name | default ('')}}{{ ']' }}

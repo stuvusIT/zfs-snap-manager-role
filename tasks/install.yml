@@ -1,26 +1,4 @@
 ---
-- name: Update repositories cache (apt)
-  apt:
-    update_cache: yes
-  changed_when: false
-  when: ansible_pkg_mgr == "apt"
-
-- name: Update repositories cache (pacman)
-  pacman:
-    update_cache: yes
-  changed_when: false
-  when: ansible_pkg_mgr == "pacman"
-
-- name: Install dependencies (apt)
-  apt:
-    name: git
-  when: ansible_pkg_mgr == "apt"
-
-- name: Install dependencies (pacman)
-  pacman:
-    name: git
-  when: ansible_pkg_mgr == "pacman"
-
 - name: Clone zfs-snap-manager
   git:
     repo: "https://github.com/khenderick/zfs-snap-manager"
@@ -28,7 +6,9 @@
     version: "v{{ zfs_snap_manager_version }}"
     force: true
   register: git
-  notify: Enable and restart zfs-snap-manager
+  become: no
+  run_once: true
+  delegate_to: localhost
 
 - name: Create library directory
   file:
@@ -37,7 +17,7 @@
     owner: root
     group: root
     mode: 0750
-  when: git.changed
+  notify: Enable and restart zfs-snap-manager
 
 - name: Copy systemd service
   copy:
@@ -47,8 +27,7 @@
     mode: 0644
     owner: root
     group: root
-    remote_src: true
-  when: git.changed
+  notify: Enable and restart zfs-snap-manager
 
 - name: Copy manager script
   copy:
@@ -58,8 +37,7 @@
     mode: 0755
     owner: root
     group: root
-    remote_src: true
-  when: git.changed
+  notify: Enable and restart zfs-snap-manager
 
 - name: Copy helper scripts
   copy:
@@ -69,9 +47,8 @@
     mode: 0644
     owner: root
     group: root
-    remote_src: true
   with_items:
     - clean.py
     - helper.py
     - zfs.py
-  when: git.changed
+  notify: Enable and restart zfs-snap-manager
