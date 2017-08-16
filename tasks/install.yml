@@ -1,4 +1,26 @@
 ---
+- name: Update repositories cache (apt)
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "apt"
+
+- name: Update repositories cache (pacman)
+  pacman:
+    update_cache: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Install python2 (apt)
+  apt:
+    name: python
+  when: ansible_pkg_mgr == "apt"
+
+- name: Install python2 (pacman)
+  pacman:
+    name: python2
+  when: ansible_pkg_mgr == "pacman"
+
 - name: Clone zfs-snap-manager
   git:
     repo: "https://github.com/khenderick/zfs-snap-manager"
@@ -27,7 +49,9 @@
     mode: 0644
     owner: root
     group: root
-  notify: Enable and restart zfs-snap-manager
+  notify: 
+   - Reload systemd daemons
+   - Enable and restart zfs-snap-manager
 
 - name: Copy manager script
   copy:

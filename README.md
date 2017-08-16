@@ -4,7 +4,7 @@ This role installs and configures [zfs-snap-manager](https://github.com/khenderi
 
 ## Requirements
 
-`python2` has to be installed on the target machine. Obviously, any ZFS filesystems that should be snapshotted must exist.
+Obviously, any ZFS filesystems that should be snapshotted must exist.
 The machine that executes the playbook needs to have internet access as well as `git` installed.
 
 ## Role Variables

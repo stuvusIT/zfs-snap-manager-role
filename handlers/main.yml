@@ -1,4 +1,8 @@
 ---
+- name: Reload systemd daemons
+  systemd:
+    daemon_reload: yes
+
 - name: Enable and restart zfs-snap-manager
   service:
     name: zfs-snap-manager.service
