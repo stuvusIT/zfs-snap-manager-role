@@ -4,8 +4,8 @@ This role installs and configures [zfs-snap-manager](https://github.com/khenderi
 
 ## Requirements
 
+An `apt`- or `pacman`-based distribution (target and controller as well). On the controlling machine, `git` will be installed.
 Obviously, any ZFS filesystems that should be snapshotted must exist.
-The machine that executes the playbook needs to have internet access as well as `git` installed.
 
 ## Role Variables
 

@@ -1,4 +1,44 @@
 ---
+- name: Gather localhost's facts
+  action: setup
+  delegate_facts: True
+  run_once: true
+  delegate_to: localhost
+
+- name: Update repositories cache on localhost (apt)
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
+  delegate_to: localhost
+  run_once: true
+  become: no
+
+- name: Update repositories cache on localhost (pacman)
+  pacman:
+    update_cache: yes
+  changed_when: false
+  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
+  delegate_to: localhost
+  run_once: true
+  become: no
+
+- name: Install git on localhost (apt)
+  apt:
+    name: git
+  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
+  delegate_to: localhost
+  run_once: true
+  become: no
+
+- name: Install git on localhost (pacman)
+  pacman:
+    name: git
+  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
+  delegate_to: localhost
+  run_once: true
+  become: no
+
 - name: Update repositories cache (apt)
   apt:
     update_cache: yes
