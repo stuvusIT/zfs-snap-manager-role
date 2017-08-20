@@ -1,54 +1,65 @@
 ---
+- name: Check whether git is installed
+  command: which git
+  register: git
+  delegate_to: localhost
+  become: no
+  changed_when: False
+  failed_when: False
+
 - name: Gather localhost's facts
   action: setup
   delegate_facts: True
-  run_once: true
+  run_once: True
   delegate_to: localhost
+  changed_when: False
+  become: no
+  when: git.stderr
 
 - name: Update repositories cache on localhost (apt)
   apt:
     update_cache: yes
-  changed_when: false
-  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
+  changed_when: False
+  when: "git.stderr and hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
   delegate_to: localhost
-  run_once: true
+  run_once: True
   become: no
 
 - name: Update repositories cache on localhost (pacman)
   pacman:
     update_cache: yes
-  changed_when: false
-  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
+  changed_when: False
+  when: "git.stderr and hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
   delegate_to: localhost
-  run_once: true
+  run_once: True
   become: no
 
 - name: Install git on localhost (apt)
   apt:
     name: git
-  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
+  when: "git.stderr and hostvars['localhost']['ansible_pkg_mgr'] == 'apt'"
   delegate_to: localhost
-  run_once: true
+  run_once: True
   become: no
 
 - name: Install git on localhost (pacman)
   pacman:
     name: git
-  when: "hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
+  when: "git.stderr and hostvars['localhost']['ansible_pkg_mgr'] == 'pacman'"
   delegate_to: localhost
-  run_once: true
+  run_once: True
   become: no
 
 - name: Update repositories cache (apt)
   apt:
     update_cache: yes
-  changed_when: false
+  changed_when: False
   when: ansible_pkg_mgr == "apt"
 
 - name: Update repositories cache (pacman)
   pacman:
     update_cache: yes
-  changed_when: false
+  changed_when: False
   when: ansible_pkg_mgr == "pacman"
 
 - name: Install python2 (apt)
@@ -66,10 +77,10 @@
     repo: "https://github.com/khenderick/zfs-snap-manager"
     dest: "{{ zfs_snap_manager_clone_dir }}"
     version: "v{{ zfs_snap_manager_version }}"
-    force: true
+    force: True
   register: git
   become: no
-  run_once: true
+  run_once: True
   delegate_to: localhost
 
 - name: Create library directory
@@ -85,7 +96,7 @@
   copy:
     src: "{{ zfs_snap_manager_clone_dir }}/system/zfs-snap-manager.service"
     dest: /etc/systemd/system/zfs-snap-manager.service
-    force: true
+    force: True
     mode: 0644
     owner: root
     group: root
@@ -97,7 +108,7 @@
   copy:
     src: "{{ zfs_snap_manager_clone_dir }}/scripts/manager.py"
     dest: /usr/lib/zfs-snap-manager/manager.py
-    force: true
+    force: True
     mode: 0755
     owner: root
     group: root
@@ -107,7 +118,7 @@
   copy:
     src: "{{ zfs_snap_manager_clone_dir }}/scripts/{{ item }}"
     dest: "/usr/lib/zfs-snap-manager/{{ item }}"
-    force: true
+    force: True
     mode: 0644
     owner: root
     group: root
