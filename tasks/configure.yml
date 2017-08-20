@@ -1,0 +1,10 @@
+---
+- name: Create zfs-snap-manager configuration
+  template:
+    src: zfssnapmanager.cfg.j2
+    dest: /etc/zfssnapmanager.cfg
+    owner: root
+    group: root
+    mode: 0640
+    backup: yes
+  notify: Enable and restart zfs-snap-manager
