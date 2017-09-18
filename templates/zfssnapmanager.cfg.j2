@@ -22,8 +22,6 @@
 
 	{%- if (fs.snapshots is defined and fs.snapshots.mountpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.mountpoint is defined) %}
 		{{ '\nmountpoint = ' }}{{ fs.snapshots.mountpoint | default(zfs_snapshot_defaults.mountpoint) }}
-	{%- else %}
-		{{ '\nmountpoint = /'}}{%- if zfs_parent_fs is defined %}{{ zfs_parent_fs }}/{%- endif %}{{ fs.name | default('') }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.replicate_endpoint is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.replicate_endpoint is defined) %}
