@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Michel Weitbrecht
   description: Installs and configures zfs-snap-manager for defined zfs filesystems

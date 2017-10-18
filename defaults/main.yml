@@ -1,3 +1,4 @@
+---
 zfs_snap_manager_version: 0.2.0
 zfs_snapshot_base_defaults:
   time: 04:00
