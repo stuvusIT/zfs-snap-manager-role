@@ -27,7 +27,7 @@
     dest: "{{ zfs_snap_manager_clone_dir }}"
     version: "v{{ zfs_snap_manager_version }}"
     force: True
-  register: git
+  changed_when: False
   become: no
   run_once: True
   delegate_to: localhost
