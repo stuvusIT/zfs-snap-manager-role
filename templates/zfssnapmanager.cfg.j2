@@ -2,64 +2,64 @@
 {% for fs in zfs_filesystems | union(zvols) | default({}) %}
 	{{- '\n[' }}{%- if zfs_parent_fs is defined %}{{ zfs_parent_fs }}/{%- endif %}{{ fs.name | default ('')}}{{ ']' }}
 	
-	{%- if (fs.snapshots is defined and fs.snapshots.time is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.time is defined) %}
-		{{ '\ntime = ' }}{{ fs.snapshots.time | default(zfs_snapshot_defaults.time) | default(zfs_snapshot_base_defaults.time) }}
-	{%- else %}
-		{{ '\ntime = ' }}{{ zfs_snapshot_base_defaults.time }}
+	{%- if (fs.snapshots is defined and fs.snapshots.time is defined) %}
+		{{ '\ntime = ' }}{{ fs.snapshots.time }}
+	{%- elif (zfs_snapshot_default_time is defined) %}
+		{{ '\ntime = ' }}{{ zfs_snapshot_default_time }}
 	{%- endif %}
 
-	{%- if (fs.snapshots is defined and fs.snapshots.snapshot is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.snapshot is defined) %}
-		{{ '\nsnapshot = ' }}{{ fs.snapshots.snapshot | default(zfs_snapshot_defaults.snapshot) | default(zfs_snapshot_base_defaults.snapshot)}}
-	{%- else %}
-		{{ '\nsnapshot = ' }}{{ zfs_snapshot_base_defaults.snapshot }}
+	{%- if (fs.snapshots is defined and fs.snapshots.snapshot is defined) %}
+		{{ '\nsnapshot = ' }}{{ fs.snapshots.snapshot }}
+	{%- elif (zfs_snapshot_default_snapshot is defined) %}
+		{{ '\nsnapshot = ' }}{{ zfs_snapshot_default_snapshot }}
 	{%- endif %}
 	
-	{%- if (fs.snapshots is defined and fs.snapshots.schema is defined) or (zfs_snapshot_defaults is defined and zfs_snapshot_defaults.schema is defined) %}
-		{{ '\nschema = ' }}{{ fs.snapshots.schema | default(zfs_snapshot_defaults.schema) | default(zfs_snapshot_base_defaults.schema) }}
-	{%- else %}
-		{{ '\nschema = ' }}{{ zfs_snapshot_base_defaults.schema }}
+	{%- if (fs.snapshots is defined and fs.snapshots.schema is defined) %}
+		{{ '\nschema = ' }}{{ fs.snapshots.schema }}
+	{%- elif (zfs_snapshot_default_schema is defined) %}
+		{{ '\nschema = ' }}{{ zfs_snapshot_default_schema }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.mountpoint is defined) %}
-		{{ '\nmountpoint = ' }}{{ fs.snapshots.mountpoint | default(zfs_snapshot_defaults.mountpoint) }}
-	{%- elif (zfs_snapshot_defaults.mountpoint is defined) %}
-		{{ '\nmountpoint = ' }}{{ zfs_snapshot_defaults.mountpoint }}
+		{{ '\nmountpoint = ' }}{{ fs.snapshots.mountpoint }}
+	{%- elif (zfs_snapshot_default_mountpoint is defined) %}
+		{{ '\nmountpoint = ' }}{{ zfs_snapshot_default_mountpoint }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.replicate_endpoint is defined) %}
-		{{ '\nreplicate_endpoint = ' }}{{ fs.snapshots.replicate_endpoint | default(zfs_snapshot_defaults.replicate_endpoint) }}
-	{%- elif (zfs_snapshot_defaults.replicate_endpoint is defined) %}
-		{{ '\nreplicate_endpoint = ' }}{{ zfs_snapshot_defaults.replicate_endpoint }}
+		{{ '\nreplicate_endpoint = ' }}{{ fs.snapshots.replicate_endpoint }}
+	{%- elif (zfs_snapshot_default_replicate_endpoint is defined) %}
+		{{ '\nreplicate_endpoint = ' }}{{ zfs_snapshot_default_replicate_endpoint }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.replicate_target is defined) %}
-		{{ '\nreplicate_target = ' }}{{ fs.snapshots.replicate_target | default(zfs_snapshot_defaults.replicate_target) }}
-	{%- elif (zfs_snapshot_defaults.replicate_target is defined) %}
-		{{ '\nreplicate_target = ' }}{{ zfs_snapshot_defaults.replicate_target }}
+		{{ '\nreplicate_target = ' }}{{ fs.snapshots.replicate_target }}
+	{%- elif (zfs_snapshot_default_replicate_target is defined) %}
+		{{ '\nreplicate_target = ' }}{{ zfs_snapshot_default_replicate_target }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.replicate_source is defined) %}
-		{{ '\nreplicate_source = ' }}{{ fs.snapshots.replicate_source | default(zfs_snapshot_defaults.replicate_source) }}
-	{%- elif (zfs_snapshot_defaults.replicate_source is defined) %}
-		{{ '\nreplicate_source = ' }}{{ zfs_snapshot_defaults.replicate_source }}
+		{{ '\nreplicate_source = ' }}{{ fs.snapshots.replicate_source }}
+	{%- elif (zfs_snapshot_default_replicate_source is defined) %}
+		{{ '\nreplicate_source = ' }}{{ zfs_snapshot_default_replicate_source }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.compression is defined) %}
-		{{ '\ncompression = ' }}{{ fs.snapshots.compression | default(zfs_snapshot_defaults.compression) }}
-	{%- elif (zfs_snapshot_defaults.compression is defined) %}
-		{{ '\ncompression = ' }}{{ zfs_snapshot_defaults.compression }}
+		{{ '\ncompression = ' }}{{ fs.snapshots.compression }}
+	{%- elif (zfs_snapshot_default_compression is defined) %}
+		{{ '\ncompression = ' }}{{ zfs_snapshot_default_compression }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.preexec is defined) %}
-		{{ '\npreexec = ' }}{{ fs.snapshots.preexec | default(zfs_snapshot_defaults.preexec) }}
-	{%- elif (zfs_snapshot_defaults.preexec is defined) %}
-		{{ '\npreexec = ' }}{{ zfs_snapshot_defaults.preexec }}
+		{{ '\npreexec = ' }}{{ fs.snapshots.preexec }}
+	{%- elif (zfs_snapshot_default_preexec is defined) %}
+		{{ '\npreexec = ' }}{{ zfs_snapshot_default_preexec }}
 	{%- endif %}
 
 	{%- if (fs.snapshots is defined and fs.snapshots.postexec is defined) %}
-		{{ '\npostexec = ' }}{{ fs.snapshots.postexec | default(zfs_snapshot_defaults.postexec) }}
-	{%- elif (zfs_snapshot_defaults.postexec is defined) %}
-		{{ '\npostexec = ' }}{{ zfs_snapshot_defaults.postexec }}
+		{{ '\npostexec = ' }}{{ fs.snapshots.postexec }}
+	{%- elif (zfs_snapshot_default_postexec is defined) %}
+		{{ '\npostexec = ' }}{{ zfs_snapshot_default_postexec }}
 	{%- endif %}
 	
 {% endfor %}

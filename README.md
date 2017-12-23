@@ -13,10 +13,11 @@ Obviously, any ZFS filesystems that should be snapshotted must exist.
 | ---------------------------- | ------------------------ | ------------------------------------------------------------------------------- |
 | `global_cache_dir`           | $ansible_env.HOME/.cache | cache directory to clone git repo to |
 | `zfs_snap_manager_version`   | `0.2.0`                  | [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager) version to use                                                                                         |
-| `zfs_parent_fs`              |                          | Parent pool or filesystem (optionally prepended to all datasets)                     |
-| `zfs_snapshot_defaults`      | `{}`                     | Default snapshot configuration used when there is no explicit configuration for a filesystem, see [snapshot configuration](#snapshot configuration) for content.          |
+| `zfs_parent_fs`              |                         | Parent pool or filesystem (optionally prepended to all datasets)                     |
 | `zfs_filesystems`            | `[]`                     | List of filesystems to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration) |
 | `zvols`                      | `[]`                     | List of zvols to be snapshotted. Snapshots can be configured using the dict item `snapshots`. For its content see [snapshot configuration](#snapshot configuration)                |
+
+Defaults for the snapshot dict can be set by prepending `zfs_snapshot_default_`, e.g. `zfs_snapshot_default_replicate_endpoint`.
 
 ### Snapshot configuration
 
