@@ -13,13 +13,19 @@
 
 - name: Install python2 (apt)
   apt:
-    name: python
+    name: "{{ item }}"
   when: ansible_pkg_mgr == "apt"
+  with_items:
+    - python
+    - python-daemon
 
 - name: Install python2 (pacman)
   pacman:
-    name: python2
+    name: "{{ item }}"
   when: ansible_pkg_mgr == "pacman"
+  with_items:
+    - python2
+    - python2-daemon
 
 - name: Clone zfs-snap-manager
   git:
