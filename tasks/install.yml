@@ -29,7 +29,7 @@
 
 - name: Clone zfs-snap-manager
   git:
-    repo: "https://github.com/SlothOfAnarchy/zfs-snap-manager"
+    repo: "https://github.com/stuvusIT/zfs-snap-manager"
     dest: "{{ zfs_snap_manager_clone_dir }}"
     force: True
   changed_when: False
