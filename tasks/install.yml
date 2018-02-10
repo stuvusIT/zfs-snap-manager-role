@@ -11,21 +11,23 @@
   changed_when: False
   when: ansible_pkg_mgr == "pacman"
 
-- name: Install python2 (apt)
+- name: Install dependencies (apt)
   apt:
     name: "{{ item }}"
   when: ansible_pkg_mgr == "apt"
   with_items:
     - python
     - python-daemon
+    - mbuffer
 
-- name: Install python2 (pacman)
+- name: Install dependencies (pacman)
   pacman:
     name: "{{ item }}"
   when: ansible_pkg_mgr == "pacman"
   with_items:
     - python2
     - python2-daemon
+    - mbuffer
 
 - name: Clone zfs-snap-manager
   git:
