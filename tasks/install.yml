@@ -1,16 +1,4 @@
 ---
-- name: Update repositories cache (apt)
-  apt:
-    update_cache: yes
-  changed_when: False
-  when: ansible_pkg_mgr == "apt"
-
-- name: Update repositories cache (pacman)
-  pacman:
-    update_cache: yes
-  changed_when: False
-  when: ansible_pkg_mgr == "pacman"
-
 - name: Install dependencies (apt)
   apt:
     name: "{{ item }}"
