@@ -1,20 +1,9 @@
----
-- name: Install dependencies (apt)
+- name: Install dependencies
   apt:
     name: "{{ item }}"
-  when: ansible_pkg_mgr == "apt"
   with_items:
     - python
     - python-daemon
-    - mbuffer
-
-- name: Install dependencies (pacman)
-  pacman:
-    name: "{{ item }}"
-  when: ansible_pkg_mgr == "pacman"
-  with_items:
-    - python2
-    - python2-daemon
     - mbuffer
 
 - name: Clone zfs-snap-manager

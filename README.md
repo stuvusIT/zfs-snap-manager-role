@@ -4,7 +4,8 @@ This role installs and configures [zfs-snap-manager](https://github.com/khenderi
 
 ## Requirements
 
-An `apt`- or `pacman`-based distribution (target and controller as well). On the controlling machine, `git` has to be installed.
+An `apt`-based distribution (target and controller as well).
+On the controlling machine, `git` has to be installed.
 Obviously, any ZFS filesystems that should be snapshotted must exist.
 
 ## Role Variables
