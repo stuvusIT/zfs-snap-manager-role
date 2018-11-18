@@ -1,10 +1,9 @@
 - name: Install dependencies
   apt:
-    name: "{{ item }}"
-  with_items:
-    - python
-    - python-daemon
-    - mbuffer
+    name:
+      - python
+      - python-daemon
+      - mbuffer
 
 - name: Clone zfs-snap-manager
   git:
