@@ -32,7 +32,7 @@
     mode: 0644
     owner: root
     group: root
-  notify: 
+  notify:
    - Reload systemd daemons
    - Enable and restart zfs-snap-manager
 
