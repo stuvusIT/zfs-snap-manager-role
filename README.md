@@ -35,7 +35,7 @@ Defaults for the snapshot dict can be set by prepending `zfs_snapshot_default_`,
 | `preexec`              | (omitted)   | A command that will be executed, before snapshot/replication. Should be omitted if nothing should be executed                                                                                                                                                                                          |
 | `postexec`             | (omitted)   | A command that will be executed, after snapshot/replication, but before the cleanup. Should be omitted if nothing should be executed                                                                                                                                                                   |
 
-Note that recursive snapshotting is not supported by zfs-snap-manager. 
+Note that recursive snapshotting is not supported by zfs-snap-manager.
 For more information on configuration and constraints thereof, consider reading the documentation at [zfs-snap-manager](https://github.com/khenderick/zfs-snap-manager).
 
 ## Example Playbook
@@ -70,7 +70,7 @@ zfs_filesystems:
       replicate_source: zpool/data
 ```
 
-### Results 
+### Results
 
 `rpool/test` will be snapshotted locally daily at `04:00` and snapshots will be cleaned up with the default schema `7d3w11m4y`.
 
@@ -80,7 +80,7 @@ zfs_filesystems:
 
 `rpool/zvol` is being snapshotted with the default schema `7d3w11m4y` every day at `22:00`.
 
-`rpool/backups/data` will not be snapshotted but pulls snapshots from `zpool/data` residing at remote host `other.remote.server.org` to the local dataset of this name. 
+`rpool/backups/data` will not be snapshotted but pulls snapshots from `zpool/data` residing at remote host `other.remote.server.org` to the local dataset of this name.
 
 ## License
 
