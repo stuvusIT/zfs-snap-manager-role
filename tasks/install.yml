@@ -1,7 +1,7 @@
 - name: Install dependencies
   apt:
     name:
-      - python
+      - "{{ 'python' if ansible_distribution_release == 'stretch' or ansible_distribution_release == 'jessie' else 'python2' }}"
       - python-daemon
       - mbuffer
 
